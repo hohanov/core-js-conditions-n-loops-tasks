@@ -486,8 +486,37 @@ function sortByAsc(arr) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  const shuffle = (source) => {
+    let even = '';
+    let odd = '';
+
+    for (let i = 0; i < source.length; i += 1) {
+      if (i % 2 === 0) {
+        even += source[i];
+      } else {
+        odd += source[i];
+      }
+    }
+
+    return even + odd;
+  };
+
+  let period = 0;
+  let current = str;
+
+  do {
+    current = shuffle(current);
+    period += 1;
+  } while (current !== str && period < iterations);
+
+  const remaining = current === str ? iterations % period : 0;
+
+  for (let i = 0; i < remaining; i += 1) {
+    current = shuffle(current);
+  }
+
+  return current;
 }
 
 /**
